@@ -2,72 +2,75 @@
 import Layout from "../layouts/Layout.astro";
 import Wave from "../components/Wave.astro";
 
-const categories = [
-  {
-    name: "Fruit & Classic",
-    accent: "var(--red)",
-    items: [
-      { img: "/images/products/fruities.png", name: "Fruities", desc: "Juicy mixed-fruit soft candy — the flagship favourite." },
-      { img: "/images/products/salted.png", name: "Salted", desc: "Sweet-and-salty soft candy with moreish balance." },
-      { img: "/images/products/gula-melaka.png", name: "Gula Melaka", desc: "Rich Malaysian palm-sugar flavour." },
-    ],
-  },
-  {
-    name: "Mint & Cooling",
-    accent: "var(--navy)",
-    items: [
-      { img: "/images/products/mint.png", name: "Mint", desc: "Cool, refreshing classic mint." },
-      { img: "/images/products/extra-cooling.png", name: "Extra Cooling", desc: "An extra-strong icy menthol hit." },
-    ],
-  },
-  {
-    name: "Tropical & Specialty",
-    accent: "var(--gold)",
-    items: [
-      { img: "/images/products/durian.png", name: "Durian", desc: "Bold, fragrant King-of-Fruits candy." },
-      { img: "/images/products/ginger.png", name: "Ginger", desc: "Warm, zingy ginger soft candy." },
-      { img: "/images/products/italiano.png", name: "Italiano Coffee", desc: "Smooth coffee-flavoured candy." },
-    ],
-  },
+const filters = [
+  { key: "all", label: "All Products" },
+  { key: "fruities", label: "Fruities" },
+  { key: "coffee", label: "Coffee" },
+  { key: "mint", label: "Mint" },
+  { key: "salted", label: "Salted" },
+  { key: "tropical", label: "Tropical" },
 ];
+
+const products = [
+  { cat: "fruities", name: "Apple", img: "/images/products/fruit-apple.png" },
+  { cat: "fruities", name: "Blackcurrant", img: "/images/products/fruit-blackcurrant.png" },
+  { cat: "fruities", name: "Mango", img: "/images/products/fruit-mango.png" },
+  { cat: "fruities", name: "Orange", img: "/images/products/fruit-orange.png" },
+  { cat: "fruities", name: "Strawberry", img: "/images/products/fruit-strawberry.png" },
+  { cat: "fruities", name: "Assorted Fruities", img: "/images/products/fruit-assorted.png" },
+  { cat: "coffee", name: "Caffe Latte", img: "/images/products/coffee-latte.png" },
+  { cat: "coffee", name: "Caffe Mocha", img: "/images/products/coffee-mocha.png" },
+  { cat: "coffee", name: "Double Espresso", img: "/images/products/coffee-espresso.png" },
+  { cat: "mint", name: "Peppermint", img: "" },
+  { cat: "mint", name: "Spearmint", img: "" },
+  { cat: "salted", name: "Salted Calamansi", img: "" },
+  { cat: "salted", name: "Salted Caramel", img: "" },
+  { cat: "salted", name: "Salted Lime", img: "" },
+  { cat: "tropical", name: "Bentong Ginger", img: "/images/products/tropical-ginger.png" },
+  { cat: "tropical", name: "Bentong Ginger with Honey Lemon", img: "/images/products/tropical-ginger-honey.png" },
+  { cat: "tropical", name: "Musang King Durian", img: "/images/products/tropical-durian.png" },
+];
+const labels: Record<string, string> = {
+  fruities: "Fruities", coffee: "Coffee", mint: "Mint", salted: "Salted", tropical: "Tropical",
+};
 ---
 
-<Layout path="/products" title="Products — Central Vista Snacks & Confectionery">
+<Layout path="/products" title="Products — Global Point Food">
   <section class="page-hero">
     <div class="container">
       <span class="eyebrow" data-reveal>Our products</span>
       <h1 class="page-title" data-reveal>Pick your flavour</h1>
       <p class="page-lead" data-reveal>
-        Fruity classics, cool mints and bold local tastes — the full Global Point soft-candy range.
-        OEM and private-label flavours welcome.
+        Five fun-filled candy series — from juicy Fruities and bold Tropical local tastes to
+        Coffee, Mint and Salted. Filter by series to explore every flavour.
       </p>
     </div>
   </section>
 
-  {categories.map((cat) => (
-    <section class="cat" style={`--c:${cat.accent}`}>
-      <div class="container">
-        <header class="cat-head" data-reveal>
-          <span class="cat-bar"></span>
-          <h2>{cat.name}</h2>
-          <span class="cat-count">{cat.items.length} products</span>
-        </header>
-        <div class="cat-grid" data-reveal-group>
-          {cat.items.map((it) => (
-            <article class="pcard">
-              <div class="pcard-media">
-                <img src={it.img} alt={it.name} loading="lazy" width="600" height="400" />
-              </div>
-              <div class="pcard-body">
-                <h3>{it.name}</h3>
-                <p>{it.desc}</p>
-              </div>
-            </article>
-          ))}
-        </div>
+  <section class="filter-sec">
+    <div class="container">
+      <div class="filter-bar" data-reveal role="tablist" aria-label="Filter products">
+        {filters.map((f, i) => (
+          <button class={`filter-btn${i === 0 ? " active" : ""}`} data-filter={f.key}>{f.label}</button>
+        ))}
       </div>
-    </section>
-  ))}
+
+      <div class="prod-grid" data-reveal-group>
+        {products.map((p) => (
+          <article class="pcard" data-cat={p.cat}>
+            <div class="pcard-media">
+              {p.img
+                ? <img src={p.img} alt={p.name} loading="lazy" width="320" height="320" />
+                : <div class="pcard-ph"><span>{p.name}</span></div>}
+              <span class="pcard-tag">{labels[p.cat]}</span>
+            </div>
+            <div class="pcard-body"><h3>{p.name}</h3></div>
+          </article>
+        ))}
+      </div>
+      <p class="no-results" id="no-results" hidden>No products in this series.</p>
+    </div>
+  </section>
 
   <section class="oem ribbon">
     <Wave side="top" />
@@ -87,42 +90,71 @@ const categories = [
 </Layout>
 
 <style>
-  .page-hero { padding: 64px 0 50px; }
+  .page-hero { padding: 64px 0 36px; }
   .page-title { font-size: clamp(2.6rem, 6vw, 4.2rem); margin: 18px 0 18px; letter-spacing: -0.04em; }
-  .page-lead { font-size: 1.12rem; color: var(--ink-soft); max-width: 600px; line-height: 1.65; }
+  .page-lead { font-size: 1.12rem; color: var(--ink-soft); max-width: 620px; line-height: 1.65; }
 
-  .cat { padding: 50px 0 0; }
-  .cat-head { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
-  .cat-bar { width: 32px; height: 6px; border-radius: 6px; background: var(--c); }
-  .cat-head h2 { font-size: clamp(1.5rem, 3.2vw, 2rem); letter-spacing: -0.03em; }
-  .cat-count { margin-left: auto; font-size: .82rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+  .filter-sec { padding: 10px 0 0; }
+  .filter-bar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 38px; }
+  .filter-btn {
+    font-family: var(--font-body); font-weight: 600; font-size: .92rem; cursor: pointer;
+    padding: 10px 18px; border-radius: 999px; border: 1px solid var(--line-strong);
+    background: #fff; color: var(--ink-soft); transition: all .2s ease;
+  }
+  .filter-btn:hover { border-color: var(--red); color: var(--ink); }
+  .filter-btn.active { background: var(--navy); border-color: var(--navy); color: #fff; }
 
-  .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 34px; }
+  .prod-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
   .pcard { display: block; }
+  .pcard.is-hidden { display: none; }
   .pcard-media {
-    aspect-ratio: 1/1; overflow: hidden; border-radius: 26px; background: var(--cream);
-    box-shadow: 0 0 0 rgba(32,35,92,0);
+    position: relative; aspect-ratio: 1/1; overflow: hidden; border-radius: 22px; background: #fff;
+    border: 1px solid var(--line); box-shadow: 0 0 0 rgba(22,35,92,0);
     transition: transform .4s cubic-bezier(.2,.8,.25,1), box-shadow .4s ease;
   }
-  .pcard-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2,.8,.25,1); }
-  .pcard:hover .pcard-media { transform: translateY(-12px); box-shadow: 0 26px 44px rgba(236,0,140,.18); }
-  .pcard:hover .pcard-media img { transform: scale(1.08); }
-  .pcard-body { padding: 18px 6px 0; }
-  .pcard-body h3 { font-size: 1.05rem; letter-spacing: -0.02em; margin-bottom: 4px; transition: color .25s ease; }
-  .pcard:hover .pcard-body h3 { color: var(--red); }
-  .pcard-body p { color: var(--ink-soft); font-size: .9rem; line-height: 1.5; }
-
-  .oem-box {
-    display: flex; justify-content: space-between; align-items: center;
-    gap: 36px; flex-wrap: wrap;
+  .pcard-media img { width: 100%; height: 100%; object-fit: contain; padding: 14px; transition: transform .6s cubic-bezier(.2,.8,.25,1); }
+  .pcard-ph { width: 100%; height: 100%; display: grid; place-items: center; text-align: center; padding: 16px;
+    background: linear-gradient(135deg, var(--navy), var(--red)); }
+  .pcard-ph span { color: #fff; font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; }
+  .pcard-tag {
+    position: absolute; left: 12px; top: 12px; font-size: .68rem; font-weight: 700; letter-spacing: .04em;
+    text-transform: uppercase; color: #fff; background: var(--red);
+    padding: 5px 10px; border-radius: 999px;
   }
+  .pcard:hover .pcard-media { transform: translateY(-10px); box-shadow: 0 24px 40px rgba(236,24,91,.18); }
+  .pcard:hover .pcard-media img { transform: scale(1.06); }
+  .pcard-body { padding: 16px 4px 0; }
+  .pcard-body h3 { font-size: .98rem; letter-spacing: -0.01em; line-height: 1.35; transition: color .25s ease; }
+  .pcard:hover .pcard-body h3 { color: var(--red); }
+  .no-results { text-align: center; color: var(--ink-soft); padding: 40px 0; font-weight: 600; }
+
+  .oem-box { display: flex; justify-content: space-between; align-items: center; gap: 36px; flex-wrap: wrap; }
   .oem-box h2 { color: #fff; font-size: clamp(1.8rem, 3.6vw, 2.5rem); margin-bottom: 12px; }
-  .oem-box p { color: rgba(255,255,255,.8); max-width: 480px; }
+  .oem-box p { color: rgba(255,255,255,.85); max-width: 480px; }
   .oem-box .btn { flex-shrink: 0; }
 
-  @media (max-width: 900px) { .cat-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 900px) { .prod-grid { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 560px) {
-    .cat-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+    .prod-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
     .oem-box { padding: 40px 30px; }
   }
 </style>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>(".filter-btn");
+  const cards = document.querySelectorAll<HTMLElement>(".pcard");
+  const noResults = document.getElementById("no-results");
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const key = btn.dataset.filter;
+      buttons.forEach((b) => b.classList.toggle("active", b === btn));
+      let shown = 0;
+      cards.forEach((c) => {
+        const match = key === "all" || c.dataset.cat === key;
+        c.classList.toggle("is-hidden", !match);
+        if (match) shown++;
+      });
+      if (noResults) noResults.hidden = shown !== 0;
+    });
+  });
+</script>

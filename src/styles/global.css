@@ -1,21 +1,21 @@
 /* ===========================================================
-   Global Point (gpf) — playful candy brand
-   Bright blue · sunny yellow (Captain Dolphin-style)
+   Global Point Food (gpf) — playful candy brand
+   Blue · magenta · green — "Brings Fun to Life"
    =========================================================== */
 
 :root {
-  /* Brand */
-  --navy:       #0A357A;   /* deep ocean blue (dark sections, headings) */
-  --navy-2:     #0C4BA4;
-  --red:        #0E6FD6;   /* bright blue (primary accent / CTA) */
-  --red-deep:   #0B59B0;
-  --gold:       #FFD200;   /* sunny yellow accent */
+  /* Brand — Global Point blue + magenta + green */
+  --navy:       #0F238C;   /* GP deep blue (dark sections, headings) */
+  --navy-2:     #16329E;
+  --red:        #EC185B;   /* GP magenta (primary accent / CTA) */
+  --red-deep:   #C70F49;
+  --gold:       #2DB742;   /* GP green accent */
 
   /* Surface + text */
-  --ink:        #16245C;   /* deep blue text */
+  --ink:        #16235C;   /* deep blue text */
   --ink-soft:   #5E6A90;
-  --paper:      #FBFDFF;   /* bright cool page background */
-  --cream:      #FFF6CC;   /* sunny-yellow alt section */
+  --paper:      #FBFCFF;   /* bright cool page background */
+  --cream:      #EAF1FF;   /* soft blue alt section */
   --white:      #FFFFFF;
   --line:       rgba(32, 35, 92, 0.10);
   --line-strong:rgba(32, 35, 92, 0.16);
