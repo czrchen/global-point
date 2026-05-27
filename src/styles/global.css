@@ -1,21 +1,21 @@
 /* ===========================================================
-   Global Point (gpf) — playful modern candy brand
-   Navy · Candy magenta · Orange — "Brings Fun to Life"
+   Global Point (gpf) — playful candy brand
+   Bright blue · sunny yellow (Captain Dolphin-style)
    =========================================================== */
 
 :root {
   /* Brand */
-  --navy:       #2B2E83;   /* deep navy anchor (dark sections, headings) */
-  --navy-2:     #3A3DA0;
-  --red:        #EC008C;   /* candy magenta (primary accent / CTA) */
-  --red-deep:   #C70077;
-  --gold:       #F7941D;   /* fun orange accent */
+  --navy:       #0A357A;   /* deep ocean blue (dark sections, headings) */
+  --navy-2:     #0C4BA4;
+  --red:        #0E6FD6;   /* bright blue (primary accent / CTA) */
+  --red-deep:   #0B59B0;
+  --gold:       #FFD200;   /* sunny yellow accent */
 
   /* Surface + text */
-  --ink:        #20235C;   /* deep navy text */
-  --ink-soft:   #6A6D94;
-  --paper:      #FFFDF8;   /* bright warm page background */
-  --cream:      #FFF0E2;   /* warm peach alt section */
+  --ink:        #16245C;   /* deep blue text */
+  --ink-soft:   #5E6A90;
+  --paper:      #FBFDFF;   /* bright cool page background */
+  --cream:      #FFF6CC;   /* sunny-yellow alt section */
   --white:      #FFFFFF;
   --line:       rgba(32, 35, 92, 0.10);
   --line-strong:rgba(32, 35, 92, 0.16);
