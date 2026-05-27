@@ -155,6 +155,7 @@ const labels: Record<string, string> = {
         if (match) shown++;
       });
       if (noResults) noResults.hidden = shown !== 0;
+      window.dispatchEvent(new Event("resize"));
     });
   });
 </script>
