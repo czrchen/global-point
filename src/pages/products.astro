@@ -11,23 +11,23 @@ const filters = [
 ];
 
 const products = [
-  { cat: "fruities", name: "Apple", img: "/images/products/fruit-apple.png" },
-  { cat: "fruities", name: "Blackcurrant", img: "/images/products/fruit-blackcurrant.png" },
-  { cat: "fruities", name: "Mango", img: "/images/products/fruit-mango.png" },
-  { cat: "fruities", name: "Orange", img: "/images/products/fruit-orange.png" },
-  { cat: "fruities", name: "Strawberry", img: "/images/products/fruit-strawberry.png" },
-  { cat: "fruities", name: "Assorted Fruities", img: "/images/products/fruit-assorted.png" },
-  { cat: "coffee", name: "Caffe Latte", img: "/images/products/coffee-latte.png" },
-  { cat: "coffee", name: "Caffe Mocha", img: "/images/products/coffee-mocha.png" },
-  { cat: "coffee", name: "Double Espresso", img: "/images/products/coffee-espresso.png" },
-  { cat: "mint", name: "Peppermint", img: "" },
-  { cat: "mint", name: "Spearmint", img: "" },
-  { cat: "salted", name: "Salted Calamansi", img: "" },
-  { cat: "salted", name: "Salted Caramel", img: "" },
-  { cat: "salted", name: "Salted Lime", img: "" },
-  { cat: "tropical", name: "Bentong Ginger", img: "/images/products/tropical-ginger.png" },
-  { cat: "tropical", name: "Bentong Ginger with Honey Lemon", img: "/images/products/tropical-ginger-honey.png" },
-  { cat: "tropical", name: "Musang King Durian", img: "/images/products/tropical-durian.png" },
+  { cat: "fruities", name: "Apple", img: "/images/products/fruit-apple.png", desc: "Crisp green-apple hard candy." },
+  { cat: "fruities", name: "Blackcurrant", img: "/images/products/fruit-blackcurrant.png", desc: "Tangy-sweet blackcurrant candy." },
+  { cat: "fruities", name: "Mango", img: "/images/products/fruit-mango.png", desc: "Juicy tropical mango candy." },
+  { cat: "fruities", name: "Orange", img: "/images/products/fruit-orange.png", desc: "Zesty citrus orange candy." },
+  { cat: "fruities", name: "Strawberry", img: "/images/products/fruit-strawberry.png", desc: "Sweet ripe-strawberry candy." },
+  { cat: "fruities", name: "Assorted Fruities", img: "/images/products/fruit-assorted.png", desc: "A mixed bag of fruity favourites." },
+  { cat: "coffee", name: "Caffe Latte", img: "/images/products/coffee-latte.png", desc: "Smooth, milky coffee candy." },
+  { cat: "coffee", name: "Caffe Mocha", img: "/images/products/coffee-mocha.png", desc: "Coffee candy with a chocolate note." },
+  { cat: "coffee", name: "Double Espresso", img: "/images/products/coffee-espresso.png", desc: "Bold espresso candy for coffee lovers." },
+  { cat: "mint", name: "Peppermint", img: "", desc: "Cool, refreshing peppermint candy." },
+  { cat: "mint", name: "Spearmint", img: "", desc: "Crisp spearmint for fresh breath." },
+  { cat: "salted", name: "Salted Calamansi", img: "", desc: "Sweet-and-salty calamansi candy." },
+  { cat: "salted", name: "Salted Caramel", img: "", desc: "Buttery caramel with a salted finish." },
+  { cat: "salted", name: "Salted Lime", img: "", desc: "Tangy salted-lime candy." },
+  { cat: "tropical", name: "Bentong Ginger", img: "/images/products/tropical-ginger.png", desc: "Warming Bentong ginger candy." },
+  { cat: "tropical", name: "Bentong Ginger with Honey Lemon", img: "/images/products/tropical-ginger-honey.png", desc: "Ginger candy with honey and lemon." },
+  { cat: "tropical", name: "Musang King Durian", img: "/images/products/tropical-durian.png", desc: "Rich Musang King durian candy." },
 ];
 const labels: Record<string, string> = {
   fruities: "Fruities", coffee: "Coffee", mint: "Mint", salted: "Salted", tropical: "Tropical",
@@ -56,14 +56,22 @@ const labels: Record<string, string> = {
 
       <div class="prod-grid" data-reveal-group>
         {products.map((p) => (
-          <article class="pcard" data-cat={p.cat}>
-            <div class="pcard-media">
-              {p.img
+          <article class="pcard" data-cat={p.cat} tabindex="0">
+            <div class="pcard-flip">
+              <div class="pcard-face pcard-front">
+                <div class="pcard-media">{p.img
                 ? <img src={p.img} alt={p.name} loading="lazy" width="320" height="320" />
-                : <div class="pcard-ph"><span>{p.name}</span></div>}
-              <span class="pcard-tag">{labels[p.cat]}</span>
+                : <div class="pcard-ph"><span>{p.name}</span></div>}<span class="pcard-tag">{labels[p.cat]}</span></div>
+                <h3>{p.name}</h3>
+                <span class="flip-hint">Hover for details ↻</span>
+              </div>
+              <div class="pcard-face pcard-back">
+                <span class="back-cat">{labels[p.cat]}</span>
+                <h3>{p.name}</h3>
+                <p>{p.desc}</p>
+                <span class="flip-hint light">↩ flip back</span>
+              </div>
             </div>
-            <div class="pcard-body"><h3>{p.name}</h3></div>
           </article>
         ))}
       </div>
@@ -88,27 +96,25 @@ const labels: Record<string, string> = {
   .filter-btn.active { background: var(--navy); border-color: var(--navy); color: #fff; }
 
   .prod-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
-  .pcard { display: block; }
+  .pcard { perspective: 1300px; outline: none; cursor: pointer; }
   .pcard.is-hidden { display: none; }
-  .pcard-media {
-    position: relative; aspect-ratio: 1/1; overflow: hidden; border-radius: 22px; background: #fff;
-    border: 1px solid var(--line); box-shadow: 0 0 0 rgba(22,35,92,0);
-    transition: transform .4s cubic-bezier(.2,.8,.25,1), box-shadow .4s ease;
-  }
-  .pcard-media img { width: 100%; height: 100%; object-fit: contain; padding: 14px; transition: transform .6s cubic-bezier(.2,.8,.25,1); }
-  .pcard-ph { width: 100%; height: 100%; display: grid; place-items: center; text-align: center; padding: 16px;
-    background: linear-gradient(135deg, var(--navy), var(--red)); }
-  .pcard-ph span { color: #fff; font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; }
-  .pcard-tag {
-    position: absolute; left: 12px; top: 12px; font-size: .68rem; font-weight: 700; letter-spacing: .04em;
-    text-transform: uppercase; color: #fff; background: var(--red);
-    padding: 5px 10px; border-radius: 999px;
-  }
-  .pcard:hover .pcard-media { transform: translateY(-10px); box-shadow: 0 24px 40px rgba(236,24,91,.18); }
-  .pcard:hover .pcard-media img { transform: scale(1.06); }
-  .pcard-body { padding: 16px 4px 0; }
-  .pcard-body h3 { font-size: .98rem; letter-spacing: -0.01em; line-height: 1.35; transition: color .25s ease; }
-  .pcard:hover .pcard-body h3 { color: var(--red); }
+  .pcard-flip { position: relative; width: 100%; height: 360px; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.2,.8,.25,1); }
+  .pcard:hover .pcard-flip, .pcard:focus-within .pcard-flip { transform: rotateY(180deg); }
+  .pcard-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column; }
+  .pcard-front { background: #fff; border: 1px solid var(--line); padding: 14px; }
+  .pcard-front .pcard-media { flex: 1; min-height: 0; position: relative; background: #fff; border-radius: 16px; overflow: hidden; }
+  .pcard-front .pcard-media img { width: 100%; height: 100%; object-fit: contain; padding: 10px; }
+  .pcard-ph { width: 100%; height: 100%; display: grid; place-items: center; text-align: center; padding: 18px; background: linear-gradient(135deg, var(--red), var(--navy)); }
+  .pcard-ph span { color: #fff; font-family: var(--font-display); font-weight: 700; font-size: 1rem; opacity: .95; }
+  .pcard-tag { position: absolute; left: 10px; top: 10px; font-size: .66rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--red-deep); background: var(--cream); padding: 5px 10px; border-radius: 999px; z-index: 1; }
+  .pcard-front h3 { font-size: .98rem; line-height: 1.35; margin-top: 12px; }
+  .flip-hint { font-size: .66rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin-top: 6px; }
+  .flip-hint.light { color: rgba(255,255,255,.7); margin-top: 14px; }
+  .pcard-back { background: var(--navy); color: #fff; transform: rotateY(180deg); border-top: 4px solid var(--red); padding: 26px 22px; justify-content: center; }
+  .back-cat { font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .pcard-back h3 { color: #fff; font-size: 1.2rem; line-height: 1.25; margin: 0 0 10px; }
+  .pcard-back p { color: rgba(255,255,255,.84); font-size: .92rem; line-height: 1.5; }
+  @media (prefers-reduced-motion: reduce) { .pcard-flip { transition: none; } }
   .no-results { text-align: center; color: var(--ink-soft); padding: 40px 0; font-weight: 600; }
 
   .oem-box { display: flex; justify-content: space-between; align-items: center; gap: 36px; flex-wrap: wrap; }
