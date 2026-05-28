@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Wave from "../components/Wave.astro";
 
 const filters = [
   { key: "all", label: "All Products" },
@@ -39,7 +38,7 @@ const labels: Record<string, string> = {
   <section class="page-hero">
     <div class="container">
       <span class="eyebrow" data-reveal>Our products</span>
-      <h1 class="page-title" data-reveal>Pick your flavour</h1>
+      <h1 class="page-title" data-split>Pick your flavour</h1>
       <p class="page-lead" data-reveal>
         Five fun-filled candy series — from juicy Fruities and bold Tropical local tastes to
         Coffee, Mint and Salted. Filter by series to explore every flavour.
@@ -69,22 +68,6 @@ const labels: Record<string, string> = {
         ))}
       </div>
       <p class="no-results" id="no-results" hidden>No products in this series.</p>
-    </div>
-  </section>
-
-  <section class="oem ribbon">
-    <Wave side="top" />
-    <Wave side="bottom" />
-    <div class="container ribbon-inner">
-      <div class="oem-box" data-reveal>
-        <div class="oem-copy">
-          <h2>Your flavour, your brand</h2>
-          <p>We develop and manufacture custom soft candies under OEM and private-label — your recipe and packaging, made and exported at scale.</p>
-        </div>
-        <a href="/contact" class="btn btn-primary">Talk to us
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
     </div>
   </section>
 </Layout>
